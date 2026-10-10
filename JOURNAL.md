@@ -44,6 +44,20 @@ Status: closed — All ties; no hardening advantage for pentagons in pentagons.
 Status: closed — No monotonic trend; family-dependent.
 - harden vs rigid: 4 vs 4, 0 ties (p = 1)
 
+## C08-phase-decomp: Phase decomposition: compress vs morph
+Status: closed — verdict recorded
+- harden vs harden-quarter: 1 vs 5, 0 ties (p = 0.2188)
+- harden vs rigid: 5 vs 1, 0 ties (p = 0.2188)
+- harden vs snap: 5 vs 1, 0 ties (p = 0.2188)
+
+## C09-seed-scale: Seed scaling: discovery curves on signature instances
+Status: closed — verdict recorded
+- harden vs rigid: 5 vs 1, 0 ties (p = 0.2188)
+
+## C10-container-frustration: Container frustration: concave families in a triangle
+Status: closed — verdict recorded
+- harden vs rigid: 5 vs 7, 0 ties (p = 0.7744)
+
 ## C11-cross-anomaly: Tau0 sweep localizing the cross morph pathology
 Status: closed — anomaly localized: morph breaks from near-full disks; scaffold-trap mechanism identified
 - harden vs harden-quarter: 0 vs 2, 0 ties (p = 0.5)
@@ -63,3 +77,6 @@ Status: closed — anomaly localized: morph breaks from near-full disks; scaffol
 - C07: no clean monotonic trend of harden advantage with n. ltri: ties at n=9,10 (6.0), harden wins big at n=11 (6.5769 vs 7.0). cross: tie at n=9, rigid wins n=10 (8.7089 vs 8.8375) and n=11 (9.1924 vs 9.3279). star5: rigid n=10 by 0.007, harden n=11 by 0.011. The pre-registered trend test goes to the meta-analysis pooled with C01/C02a. 256 runs, 0 errors, 16/16 verified. (evidence: C07-concave-scale) [C07-concave-scale 2026-10-09]
 - META-ANALYSIS (pre-registered): no tested predictor survives. 37 instances, 9 harden-win events. H1 concavity: 7/22 concave vs 2/15 convex, one-sided Fisher p=0.187, fail to reject. H2 n-trend within concave: ltri Z=-0.76 p=0.78, star5 Z=1.15 p=0.126, pooled Z=0.49 p=0.31, fail to reject. H3 disk_share: medians both 0.408, one-sided Mann-Whitney p=0.149, fail to reject. Mixed-effects logistic (7 fixed + family random intercept on 37 obs/9 events) is overparameterized: family-level covariates compete with the random intercept (family_sd collapses to ~0 with huge uncertainty) and VB intervals are implausibly tight - reported as unstable per the plan's contingency. Sensitivity: pooled-duplicate resolution changes 0/37 outcomes. Correction recorded: the frozen plan misremembered C01's design (actual: ltri 5-10, cross 4-8, star5 5-10, squ 8-12, tri 8-10); inclusion corrected to the real design, intent unchanged. Headline: hardening wins are real (9/37, incl. replicated n=11 signatures and the ltri pinwheel) but NOT predicted by concavity, piece count trend, or disk share. Events cluster in ltri (3/7) and star5 (4/7); cross is 0/8 despite being concave. (evidence: meta-analysis) [META 2026-10-09]
 - C11 tau0 sweep: the full morph breaks only from near-full disks. Cross n=5: tau0 in {0.25,0.5,0.75} all reach 6.3246, only tau0=1.0 fails (6.6569). Cross n=8: tau0=0.25 reaches 7.6026, tau0>=0.5 stuck at ~7.78. Trajectory analysis: disk-compress packs to L=3.29 (disks pack far tighter than plus-shapes); the morph must then expand enormously as corners grow and gets trapped in the disk-optimal scaffold's basin (final 6.6569). Quarter-compress ends at L=5.83 and the morph is a gentle refinement to 6.3246. Mechanism refined: the compress scaffold can be a TRAP when the disk-optimal arrangement is topologically far from any good polygonal arrangement; the morph is local and inherits the scaffold's basin. Contrast ltri n=5 where the disk scaffold is in the right basin and compress is essential (C05). [C11-cross-anomaly 2026-10-10]
+- C08: gradual morph is ESSENTIAL, not theater. snap (disk-compress then instant rigid) within 1e-3 of harden on only 2/6 instances (star5 n=9, tri n=11); harden beats snap by >1e-3 on 4/6, catastrophically on ltri (snap 11.57/22.11 vs harden 4.00/6.58). The tight disk scaffold cannot survive an instant snap; corners must grow gradually. harden-quarter >= harden-full on 6/6 (quarter best or tied everywhere) — full disk phase never better. Refined mechanism: compress proposes a (sometimes tight) scaffold; the GRADUAL morph preserves it while growing corners. [C08-phase-decomp 2026-10-10]
+- C09: seed-scaling hypothesis NOT supported in general (gap widens on 3/6, needed 5/6). Nuanced pattern: squ n=11 signature emerges at 32 seeds (gap flips -0.01 to +0.011, rare basin confirmed); ltri n=5 is a fixed offset (harden finds 4.0 by 16 seeds, rigid never does); ltri n=11 rigid CATCHES UP by 32 seeds (gap shrinks 0.42 to 0.03) — that basin is not that rare, rigid just needs tries; star5 n=9 fixed offset. Hardening's edge is sometimes early discovery, sometimes budget-dependent, sometimes erodible. [C09-seed-scale 2026-10-10]
+- C10: frustration hypothesis REJECTED for cross — 0/4 harden wins in triangle container (1 tie, 3 rigid losses), matching its 0/8 in squares. Cross never benefits regardless of container; its optima are grid-obvious and its disk scaffold is always a trap (C11). ltri wins 3/4 in triangle (n=6,7,8), star5 wins 1/4 (n=8). Container frustration does not create hardening advantage; the piece-level story stands. [C10-container-frustration 2026-10-10]
