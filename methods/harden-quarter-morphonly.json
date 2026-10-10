@@ -1,0 +1,1 @@
+{"method":"harden-quarter","note":"Quarter morph-only (no compress); for the corrected C15 transplant. Preserves the tau 0.25->0 path that produced the good scaffold.","params":{"compress":0,"mu":0.08,"noiseScale":8}}

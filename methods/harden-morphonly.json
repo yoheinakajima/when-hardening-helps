@@ -1,0 +1,1 @@
+{"method":"harden","note":"Morph-only (no compress phase); for the C14 scaffold transplant. Starts from init_from poses via configs.","params":{"compress":0,"mu":0.08,"noiseScale":8}}

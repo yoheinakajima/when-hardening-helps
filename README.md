@@ -19,3 +19,6 @@ the soft-to-rigid packing search helps, and *why*? Every number below is generat
 | C09-seed-scale | Does hardening's advantage grow with seed budget (rare-basin discovery)? | closed | 5–1 (0 ties, p=0.219) |
 | C10-container-frustration | Does container-piece geometric frustration create hardening advantage? | closed | 5–7 (0 ties, p=0.774) |
 | C11-cross-anomaly | Where in the morph path does full hardening break on cross (and why)? | closed | — |
+| C13-fidelity-validation | Does the scaffold-fidelity rule predict on held-out instances? | closed | 5–5 (0 ties, p=1) |
+| C14-scaffold-transplant | Does the scaffold cause the morph's outcome (causal proof)? | closed | — |
+| C15-transplant-v2 | Does the scaffold cause the morph's outcome (corrected causal test)? | closed | — |
