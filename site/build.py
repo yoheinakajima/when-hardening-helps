@@ -125,9 +125,12 @@ def index_body(data, pieces):
             f'<p><b>Status.</b> {html.escape(c["status"])} — {html.escape(c["decision"])}</p>'
             f'<p><a class="mono" href="journal.html#{html.escape(c["id"])}">journal</a></p></div>')
     findings = ''.join(
-        f'<li><a class="mono" href="journal.html#{html.escape(f["campaign"])}">'
-        f'{html.escape(f["campaign"])}</a> {html.escape(f["text"])} '
-        f'<span class="mono">[{html.escape(f["date"])}]</span></li>'
+        (f'<li><a class="mono" href="journal.html#{html.escape(f["campaign"])}">'
+         f'{html.escape(f["campaign"])}</a> {html.escape(f["text"])} '
+         f'<span class="mono">[{html.escape(f["date"])}]</span></li>'
+         if f["campaign"] else
+         f'<li><span class="mono">meta-analysis</span> {html.escape(f["text"])} '
+         f'<span class="mono">[{html.escape(f["date"])}]</span></li>')
         for f in data['findings'])
 
     # front-page gallery: one static thumbnail per family (hand-written one-line verdicts
