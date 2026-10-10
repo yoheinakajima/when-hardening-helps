@@ -15,3 +15,4 @@ the soft-to-rigid packing search helps, and *why*? Every number below is generat
 | C05-morph-parts | Which part of the methodology matters, for which concave shapes? | closed | 5–2 (0 ties, p=0.453) |
 | C06-pen-in-pen | Does the hardening effect survive a change of container shape? | closed | 0–3 (1 ties, p=0.25) |
 | C07-concave-scale | Does the hardening advantage grow with n? | closed | 4–4 (0 ties, p=1) |
+| C11-cross-anomaly | Where in the morph path does full hardening break on cross (and why)? | closed | — |

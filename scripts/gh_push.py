@@ -42,15 +42,29 @@ def sh(*args):
 def blob_for(base, path):
     with open(os.path.join(base, path), "rb") as f:
         data = f.read()
-    b = api("POST", f"/repos/{OWNER}/{REPO}/git/blobs",
-            {"content": base64.b64encode(data).decode(), "encoding": "base64"})
-    return b["sha"]
+    payload = {"content": base64.b64encode(data).decode(), "encoding": "base64"}
+    for attempt in range(4):
+        try:
+            b = api("POST", f"/repos/{OWNER}/{REPO}/git/blobs", payload, ctx=path)
+            return b["sha"]
+        except urllib.error.HTTPError as e:
+            if e.code == 400 and attempt < 3:
+                wait = 2 ** attempt
+                print(f"  blob 400 for {path}, retrying in {wait}s", flush=True)
+                time.sleep(wait)
+                continue
+            raise
 
 
 def push_tree(base, ref, message, paths, parents):
     entries = []
     for i, p in enumerate(paths):
-        entries.append({"path": p, "mode": "100644", "type": "blob", "sha": blob_for(base, p)})
+        try:
+            sha = blob_for(base, p)
+        except Exception:
+            print(f"blob failed for: {p!r}", flush=True)
+            raise
+        entries.append({"path": p, "mode": "100644", "type": "blob", "sha": sha})
         if (i + 1) % 50 == 0:
             print(f"  blobs {i + 1}/{len(paths)}", flush=True)
     tree = api("POST", f"/repos/{OWNER}/{REPO}/git/trees", {"tree": entries})["sha"]

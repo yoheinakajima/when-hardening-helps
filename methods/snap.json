@@ -1,0 +1,1 @@
+{"method":"snap","note":"Disk compression, then rigid polygons at once (no gradual morph). Ablation for whether the morph path matters beyond the compress phase. Same total evals as harden.","params":{"mu":0.08,"noiseScale":8}}

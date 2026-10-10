@@ -1,0 +1,1 @@
+{"method":"harden","note":"Same tuned schedule as harden; morph path starts half-rounded (tau0=0.5). For the C11 tau0 sweep localizing where the full morph breaks on cross.","params":{"mu":0.08,"noiseScale":8,"tau0":0.5}}
