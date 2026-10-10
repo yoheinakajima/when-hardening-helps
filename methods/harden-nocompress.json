@@ -1,0 +1,1 @@
+{"method":"harden-nocompress","note":"same tuned schedule as harden but no disk-compress phase; total evals identical (0+10000+1500 = 2500+7500+1500). Ablation for the compress phase's contribution.","params":{"compress":0,"morph":10000,"mu":0.08,"noiseScale":8}}

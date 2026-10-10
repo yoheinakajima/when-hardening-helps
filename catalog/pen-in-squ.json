@@ -1,0 +1,87 @@
+{
+ "family": "pen-in-squ",
+ "title": "Unit regular pentagons in a square",
+ "dim": 2,
+ "piece": "pentagon",
+ "container": "square",
+ "records": {
+  "6": {
+   "value": 3.88299,
+   "finder": "Found by Haowei Lin in July 2026",
+   "truncated": true
+  },
+  "7": {
+   "value": 4.18037,
+   "finder": "Found by Nicolas Campailla in May 2026",
+   "truncated": true
+  },
+  "8": {
+   "value": 4.3819,
+   "finder": "Found by Aristotle Papowitz in July 2026",
+   "truncated": true
+  },
+  "9": {
+   "value": 4.60032,
+   "finder": "Found by Yanis Gomes in October 2026",
+   "truncated": true
+  },
+  "10": {
+   "value": 4.90581,
+   "finder": "Found by Jonathan Viquerat in June 2026",
+   "truncated": true
+  },
+  "11": {
+   "value": 5.11555,
+   "finder": "Found by Jonathan Viquerat in August 2026",
+   "truncated": true
+  },
+  "12": {
+   "value": 5.23221,
+   "finder": "Found by Timo Berthold et al in May 2026",
+   "truncated": true
+  },
+  "13": {
+   "value": 5.52102,
+   "finder": "Found by Jake Loyd in June 2026",
+   "truncated": true
+  },
+  "14": {
+   "value": 5.69659,
+   "finder": "Found by Jake Loyd in June 2026",
+   "truncated": true
+  },
+  "15": {
+   "value": 5.90118,
+   "finder": "Found by Jonathan Viquerat in August 2026",
+   "truncated": true
+  },
+  "16": {
+   "value": 6.06451,
+   "finder": "Found by Aapo Lipponen in October 2026",
+   "truncated": true
+  },
+  "17": {
+   "value": 6.23761,
+   "finder": "Found by Jonathan Viquerat in June 2026",
+   "truncated": true
+  },
+  "18": {
+   "value": 6.32565,
+   "finder": "Found by Bhavithran Ananthan in July 2026",
+   "truncated": true
+  },
+  "19": {
+   "value": 6.55781,
+   "finder": "Found by Jake Loyd in June 2026",
+   "truncated": true
+  },
+  "20": {
+   "value": 6.66135,
+   "finder": "Found by Haowei Lin in July 2026",
+   "truncated": true
+  }
+ },
+ "sources": [
+  "https://erich-friedman.github.io/packing/peninsqu/"
+ ]
+}

@@ -1,0 +1,34 @@
+{
+ "amendments": [
+  {
+   "date": "2026-10-09",
+   "change": "engine tightContainer() had no pentagon branch and fell through to the triangle formula (assumes 3 walls), under-reporting L by ~6e-6 and failing verification. Added an origin-centered pentagon branch consistent with the search model. Campaign re-run from scratch with the fixed engine; prior runs discarded.",
+   "reason": "correctness bug found by the verifier"
+  }
+ ],
+ "budgets": [
+  1
+ ],
+ "created": "2026-10-09",
+ "decision_rule": "Instance-level reporting (best-of-16 harden vs rigid at 1e-4); sign test across the 4 instances is descriptive only (n=4 is underpowered by design - this is a scoping campaign for the container axis). No external records exist for pen-in-pen; all comparisons are relative.",
+ "hypothesis": "Two-sided scoping: container shape interacts with the hardening effect. If pen-in-pen shows harden wins where pen-in-squ did not (C15: 1 vs 8), the container - not just the piece - belongs in the predictor set.",
+ "id": "C06-pen-in-pen",
+ "instances": [
+  {
+   "family": "pen-in-pen",
+   "ns": [
+    5,
+    6,
+    7,
+    8
+   ]
+  }
+ ],
+ "methods": [
+  "harden",
+  "rigid"
+ ],
+ "question": "Does the hardening effect survive a change of container shape?",
+ "seeds": 16,
+ "title": "Pentagons in a pentagon"
+}

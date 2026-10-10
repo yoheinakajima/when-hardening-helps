@@ -1,0 +1,10 @@
+{
+ "title": "Unit plus-pentominoes in a square",
+ "dim": 2,
+ "piece": "cross",
+ "container": "square",
+ "measure": "side",
+ "note": "plus pentomino of five unit squares; concave 12-gon outline",
+ "records": null,
+ "no_external_records": "No published catalogue exists for concave packings; all claims are head-to-head at matched budget."
+}

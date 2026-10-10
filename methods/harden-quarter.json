@@ -1,0 +1,8 @@
+{
+ "method": "harden-quarter",
+ "params": {
+  "mu": 0.08,
+  "noiseScale": 8
+ },
+ "note": "same tuned schedule as harden; path starts quarter-rounded (tau0=0.25)"
+}

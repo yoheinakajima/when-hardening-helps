@@ -1,0 +1,10 @@
+{
+ "title": "Five-pointed stars in a square",
+ "dim": 2,
+ "piece": "star5",
+ "container": "square",
+ "measure": "side",
+ "note": "regular 5-pointed star, outer radius 1, inner radius 0.381966; concave decagon outline",
+ "records": null,
+ "no_external_records": "No published catalogue exists for concave packings; all claims are head-to-head at matched budget."
+}
