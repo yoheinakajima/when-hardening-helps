@@ -1,0 +1,48 @@
+n=37, events=9
+============================================================
+
+H1: concave vs convex event rates
+  concave: 7/22 = 0.318   convex: 2/15 = 0.133
+  one-sided Fisher exact p = 0.1865  -> fail to reject
+
+H2: trend of P(Y=1) with n within concave families (Cochran-Armitage)
+  ltri-in-squ    n=[5, 6, 7, 8, 9, 10, 11] Y=[1, 1, 0, 0, 0, 0, 1]  Z=-0.764 one-sided p=0.7775
+  cross-in-squ   n=[4, 5, 6, 7, 8, 9, 10, 11] Y=[0, 0, 0, 0, 0, 0, 0, 0]  Z=nan one-sided p=nan
+  star5-in-squ   n=[5, 6, 7, 8, 9, 10, 11] Y=[0, 0, 1, 1, 1, 0, 1]  Z=1.146 one-sided p=0.1260
+  pooled concave n=[4, 5, 6, 7, 8, 9, 10, 11] Y=[0, 1, 1, 1, 1, 1, 0, 2]  Z=0.490 one-sided p=0.3122
+
+H3: disk_share lower among Y=1 (one-sided Wilcoxon rank-sum)
+  Y=1 disk_share: n=9 median=0.408
+  Y=0 disk_share: n=28 median=0.408
+  one-sided Mann-Whitney p = 0.1487  -> fail to reject
+
+============================================================
+Model 1: mixed-effects logistic Y ~ concave + n_reflex + disk_share +
+         symmetry + n_pieces + container_sides + (1|family)
+                  Binomial Mixed GLM Results
+==============================================================
+                Type Post. Mean Post. SD   SD  SD (LB) SD (UB)
+--------------------------------------------------------------
+intercept          M    -0.0385   0.4569                      
+concave            M    -0.2563   0.5319                      
+n_reflex           M     0.5217   0.1507                      
+disk_share         M     0.0405   0.9094                      
+symmetry           M    -0.6728   0.1259                      
+n_pieces           M     0.2620   0.0531                      
+container_sides    M    -0.5890   0.1164                      
+family_sd          V     0.0227   0.2422 1.023   0.630   1.661
+==============================================================
+Parameter types are mean structure (M) and variance structure
+(V)
+Variance parameters are modeled as log standard deviations
+
+  odds ratios (95% CI):
+    intercept       OR=0.962  95% CI [0.393, 2.356]
+    concave         OR=0.774  95% CI [0.273, 2.195]
+    n_reflex        OR=1.685  95% CI [1.254, 2.264]
+    disk_share      OR=1.041  95% CI [0.175, 6.190]
+    symmetry        OR=0.510  95% CI [0.399, 0.653]
+    n_pieces        OR=1.300  95% CI [1.171, 1.442]
+    container_sides OR=0.555  95% CI [0.442, 0.697]
+
+Done.

@@ -12,4 +12,6 @@ the soft-to-rigid packing search helps, and *why*? Every number below is generat
 | C02b-handoff-star5 | Does rigid search reach harden's star5 n=9 basin when started from a mid-morph c | closed | — |
 | C03-morph-fraction | How much of the morph path is needed to reach the ltri n=5 pinwheel basin? | closed | — |
 | C04-convex-rare | Does the n=11 hardening signature generalize across convex shapes? | closed | 2–2 (0 ties, p=1) |
+| C05-morph-parts | Which part of the methodology matters, for which concave shapes? | closed | 5–2 (0 ties, p=0.453) |
 | C06-pen-in-pen | Does the hardening effect survive a change of container shape? | closed | 0–3 (1 ties, p=0.25) |
+| C07-concave-scale | Does the hardening advantage grow with n? | closed | 4–4 (0 ties, p=1) |

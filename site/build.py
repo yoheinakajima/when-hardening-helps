@@ -158,14 +158,14 @@ def index_body(data, pieces):
 <h1>When does hardening help?</h1>
 <p class="lede">Hardening — starting each piece as its inscribed disk and morphing it into the target shape while the container compresses — is not a better default than rigid starts, but it is a <i>different</i> search. On squares in a square it reached packings no other method found. This project asks whether that pattern is predictable: can we say, before running, where the morph will pay?</p></header>
 
-<section><h2>The two-factor hypothesis</h2>
+<section><h2>The two-factor hypothesis — falsified</h2>
 <p>Two factors, both needed, fit every result of the parent project:</p>
 <ol>
 <li><b>Path length</b> — how different the polygon is from its inscribed disk: the "room" the morph has to work with. Computed from the piece geometry, not fitted:</li>
 </ol>
 {hyp_table}
 <ol start="2"><li><b>Hidden tilted optima</b> — best-known packings with orientations a rigid search cannot easily reach.</li></ol>
-<p>Square-in-square is the only tested convex family with both: triangles have a long path but tessellate (nothing hidden); pentagons, hexagons and octagons are near-round (too little room for the morph to matter). <b>The flagship prediction:</b> concave pieces — L-trominoes, plus-pentominoes, five-pointed stars — deviate enormously from their inscribed disks and their optima must interlock. Hardening should show its <i>largest</i> advantage here. If it does not, the hypothesis is dead and the square result is corner- or schedule-specific. The falsification condition is pre-registered in the flagship campaign plan.</p></section>
+<p>The flagship prediction was that <i>concave</i> pieces — L-trominoes, plus-pentominoes, five-pointed stars — would show hardening's <i>largest</i> advantage. <b>It did not survive.</b> C01 found harden beating rigid on only 5 of 17 concave instances (5 losses, 7 ties; p=1), and the pre-registered meta-analysis over 37 instances found <b>no predictor that works</b>: not concavity (one-sided Fisher p=0.19), not a trend with piece count (Cochran–Armitage p=0.31), not inscribed-disk share (Mann–Whitney p=0.15). The mixed-effects model was overparameterized for the data and is reported as unstable. Hardening wins are real — 9 of 37 instances, including the replicated n=11 signatures and the L-tromino pinwheel — but <i>where</i> they happen is not predicted by any shape descriptor tested. That negative result is the finding.</p></section>
 
 <section><h2>The answer so far</h2>
 {''.join(ans)}
@@ -318,16 +318,17 @@ def paper_body(data, nums):
         'starts, but a <i>different</i> search: on squares in a square it reached packings no '
         'other method found, while showing no advantage on triangles, hexagons, pentagons, '
         'octagons, or four families held out from all development.</p>'
-        '<p>This project tests whether that pattern is predictable. A two-factor hypothesis '
-        'fits all existing data: hardening helps where (1) the polygon differs substantially '
-        'from its inscribed disk — the "room" the morph has to work with — and (2) the '
-        'best-known packings contain tilted orientations a rigid search cannot easily reach. '
-        'Square-in-square is the only tested convex family with both. The flagship prediction '
-        'is that <i>concave</i> pieces (L-trominoes, plus-pentominoes, five-pointed stars), '
-        'which deviate enormously from their inscribed disks and whose optima must interlock, '
-        'will show hardening\'s largest advantage. If they do not, the hypothesis is dead and '
-        'the square result is corner- or schedule-specific; the falsification condition is '
-        'pre-registered in the flagship campaign plan.</p>'
+        '<p>This project tested whether that pattern is predictable. The two-factor hypothesis — '
+        'hardening helps where (1) the polygon differs substantially from its inscribed disk and (2) '
+        'the best-known packings contain tilted orientations a rigid search cannot easily reach — '
+        '<b>did not survive</b>. The flagship prediction was that <i>concave</i> pieces would show '
+        'hardening\'s largest advantage; instead the pre-registered meta-analysis over 37 instances found '
+        '<b>no working predictor</b>: not concavity (one-sided Fisher p=0.19), not a trend with piece count '
+        '(Cochran–Armitage p=0.31), not inscribed-disk share (Mann–Whitney p=0.15). Hardening wins are real '
+        '(9 of 37 instances, including replicated n=11 signatures and the L-tromino pinwheel), and the mechanism '
+        'experiments show its role is <i>basin delivery</i> — a soft compress phase arranges positions, a short '
+        'morph grows the corners in — but <i>where</i> it pays is not predicted by any shape descriptor tested. '
+        'That negative result is the finding.</p>'
         '<p>Concave pieces are compound: convex parts sharing one pose, with part-pair '
         'separating-axis collision and the morph applied to every vertex about the centroid. '
         'No Friedman-style catalogue exists for concave packings, so every concave claim is a '
