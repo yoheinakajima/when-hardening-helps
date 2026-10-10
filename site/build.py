@@ -97,25 +97,99 @@ def page(name, title, desc, body, scripts=''):
 
 
 # ---------------------------------------------------------------- index
+def meta_pvalues():
+    """Falsification p-values, parsed from the frozen meta-analysis output."""
+    txt = open(os.path.join(ROOT, 'analysis', 'meta-results.txt')).read()
+    out = {}
+    m = re.search(r'one-sided Fisher exact p = ([\d.]+)', txt)
+    out['concavity'] = float(m.group(1)) if m else float('nan')
+    m = re.search(r'pooled concave.*?one-sided p=([\d.]+)', txt)
+    out['ntrend'] = float(m.group(1)) if m else float('nan')
+    m = re.search(r'one-sided Mann-Whitney p = ([\d.]+)', txt)
+    out['diskshare'] = float(m.group(1)) if m else float('nan')
+    return out
+
+
+def fidelity_stats():
+    with open(os.path.join(HERE, 'assets', 'fidelity-stats.json')) as f:
+        return json.load(f)
+
+
+def cell_best(cells, family, n, method):
+    cands = [c for c in cells if c['family'] == family and c['n'] == n
+             and c['method'] == method]
+    return min(c['best_L'] for c in cands) if cands else None
+
+
+def transplant_hits(findings):
+    for f in findings:
+        if f['campaign'] == 'C15-transplant-v2':
+            m = re.search(r'(\d+)/(\d+)', f['text'])
+            if m:
+                return m.group(1), m.group(2)
+    return None, None
+
+
+def quarter_record(cells):
+    """Fraction of (family, n) with both harden and harden-quarter where
+    quarter is within 1e-4 of harden or better."""
+    insts = {(c['family'], c['n']) for c in cells}
+    tot = good = 0
+    for fam, n in insts:
+        h = cell_best(cells, fam, n, 'harden')
+        q = cell_best(cells, fam, n, 'harden-quarter')
+        if h is not None and q is not None:
+            tot += 1
+            if q <= h + 1e-4:
+                good += 1
+    return good, tot
+
+
 def index_body(data, pieces):
     fams = data['families']
     camps = data['campaigns']
     cells = data['cells']
     total_runs = sum(c['runs'] for c in cells)
     n_inst = len({(c['family'], c['n']) for c in cells})
+    pv = meta_pvalues()
+    fs = fidelity_stats()
+    rho_d = fs['discovery']['rho']
+    rho_h1 = fs['heldout1']['rho']
+    rho_h2 = fs['heldout2']['rho']
 
-    # two-factor hypothesis, with the disk-share table generated from pieces.json
-    order = [p for p in ('triangle', 'square', 'pentagon', 'hexagon', 'octagon',
-                         'ltri', 'cross', 'star5') if p in pieces]
-    rows = []
-    for p in order:
-        share = disk_share(pieces[p])
-        rows.append(f'<tr><td>{p}</td><td>{share:.1%}</td><td>{1 - share:.1%}</td></tr>')
-    hyp_table = ('<table class="data"><thead><tr><th>piece</th>'
-                 '<th>inscribed-disk share of area</th><th>morph "room"</th></tr></thead>'
-                 + ''.join(rows) + '</table>')
+    # ---- Act 2: the falsified hypothesis (numbers from the frozen analysis)
+    hyp = (f'<p>Our first theory was simple: hardening should help most where pieces are '
+           f'<i>concave</i> — L-trominoes, plus-pentominoes, five-pointed stars — because the '
+           f'morph has the most "room" to work. The flagship prediction failed cleanly. C01 '
+           f'found hardening beating rigid on only 5 of 17 concave instances (5 losses, 7 ties), '
+           f'and the pre-registered meta-analysis found <b>no predictor that works</b>: not '
+           f'concavity (Fisher p={pv["concavity"]:.2f}), not a trend with piece count '
+           f'(p={pv["ntrend"]:.2f}), not inscribed-disk share (Mann–Whitney p={pv["diskshare"]:.2f}). '
+           f'The mixed-effects model was overparameterized for the data and is reported as '
+           f'unstable. Hardening wins are real, but <i>where</i> they happen is not predicted '
+           f'by any shape descriptor tested. That negative result is the finding — and the hook '
+           f'for everything below.</p>')
 
-    # the answer so far: generated from campaign statuses + findings
+    # ---- Act 4: mechanism numbers, all from the cells ledger
+    ltri_h = cell_best(cells, 'ltri-in-squ', 5, 'harden')
+    ltri_snap = cell_best(cells, 'ltri-in-squ', 5, 'snap')
+    qgood, qtot = quarter_record(cells)
+    th, tt = transplant_hits(data['findings'])
+    snap_line = ''
+    if ltri_h is not None and ltri_snap is not None:
+        snap_line = (f'On five L-trominoes, skipping the gradual morph ("snap": compress as '
+                     f'disks, then rigid polygons all at once) lands at L={fmt_L(ltri_snap)} '
+                     f'versus L={fmt_L(ltri_h)} for the real morph — the tight disk scaffold '
+                     f'cannot survive an instant snap. ')
+    quarter_line = (f'Starting the morph nearly rigid (τ₀=0.25) matches or beats the full '
+                    f'disk-to-shape morph on {qgood} of {qtot} tested instances. ')
+    transplant_line = ''
+    if th:
+        transplant_line = (f'And the transplant experiment proved the scaffold is doing the '
+                           f'work: grafting a good disk scaffold under the morph reached the '
+                           f'good basin in {th} of {tt} runs.')
+
+    # ---- existing depth: campaigns, findings, gallery (unchanged logic)
     ans = []
     for c in camps:
         ans.append(
@@ -133,42 +207,89 @@ def index_body(data, pieces):
          f'<span class="mono">[{html.escape(f["date"])}]</span></li>')
         for f in data['findings'])
 
-    # front-page gallery: one static thumbnail per family (hand-written one-line verdicts
-    # from closed campaigns; the animated side-by-side lives on the family pages)
     VERDICTS = {
         'ltri-in-squ': 'Hardening finds the n=5 pinwheel (L=4.0); rigid starts miss it. Basin delivery confirmed by checkpoint handoff.',
-        'cross-in-squ': 'Rigid wins here — no hardening advantage on the plus-pentomino.',
-        'star5-in-squ': 'Hardening wins n=7, 8, 9; the handoff confirms basin delivery on n=9.',
+        'cross-in-squ': 'Mostly rigid territory — but hardening took n=14 and n=11-in-triangle on high scaffold fidelity.',
+        'star5-in-squ': 'Hardening wins n=7, 8, 9, 12, 13; the handoff confirms basin delivery on n=9.',
         'squ-in-squ': 'n=11: hardening reaches Trump\u2019s record 3.87708; rigid does not.',
         'tri-in-squ': 'n=11: the signature generalizes — hardening reaches the record here too.',
         'pen-in-squ': 'n=11: both methods tie at Friedman\u2019s record. No advantage.',
         'hex-in-squ': 'n=11: rigid wins outright.',
         'pen-in-pen': 'Pentagons in a pentagon: all ties, n=5\u20138. No advantage either way.',
+        'ltri-in-tri': 'Hardening wins 3 of 4 in the triangle container (n=6, 7, 8).',
+        'star5-in-tri': 'Hardening wins n=8, 9, 10; ties elsewhere.',
+        'cross-in-tri': 'Hardening took n=11 — the second cross win anywhere.',
     }
     order = [f for f in ('ltri-in-squ', 'star5-in-squ', 'cross-in-squ', 'squ-in-squ',
-                         'tri-in-squ', 'pen-in-squ', 'hex-in-squ', 'pen-in-pen') if f in fams]
+                         'tri-in-squ', 'pen-in-squ', 'hex-in-squ', 'pen-in-pen',
+                         'ltri-in-tri', 'star5-in-tri', 'cross-in-tri') if f in fams]
     cards = []
     for fid in order:
         fam = fams[fid]
+        thumb = f'assets/thumbs/{fid}.png'
+        img = (f'<img src="{thumb}" alt="{short_piece(fam["title"])} best packing" loading="lazy">'
+               if os.path.exists(os.path.join(HERE, thumb)) else '')
         cards.append(
             f'<a class="famcard" href="families.html#{fid}">'
-            f'<img src="assets/thumbs/{fid}.png" alt="{short_piece(fam["title"])} best packing" loading="lazy">'
+            f'{img}'
             f'<div><b>{short_piece(fam["title"])}</b><span>{VERDICTS.get(fid, "")}</span></div></a>')
     gallery = ''.join(cards)
 
     return f"""
 <header><div class="eyebrow">a follow-up to <a href="https://yoheinakajima.github.io/soft-to-rigid/">soft-to-rigid</a></div>
 <h1>When does hardening help?</h1>
-<p class="lede">Hardening — starting each piece as its inscribed disk and morphing it into the target shape while the container compresses — is not a better default than rigid starts, but it is a <i>different</i> search. On squares in a square it reached packings no other method found. This project asks whether that pattern is predictable: can we say, before running, where the morph will pay?</p></header>
+<p class="lede"><b>Act 1 — the question.</b> Hardening starts every piece as its inscribed disk
+and morphs it into the target shape while the container compresses. It is not a better
+default than rigid starts, but it is a <i>different</i> search: on squares in a square it
+reached packings no other method found. This project asks whether that pattern is
+predictable — can we say, <i>before running</i>, where the morph will pay?</p></header>
 
-<section><h2>The two-factor hypothesis — falsified</h2>
-<p>Two factors, both needed, fit every result of the parent project:</p>
-<ol>
-<li><b>Path length</b> — how different the polygon is from its inscribed disk: the "room" the morph has to work with. Computed from the piece geometry, not fitted:</li>
-</ol>
-{hyp_table}
-<ol start="2"><li><b>Hidden tilted optima</b> — best-known packings with orientations a rigid search cannot easily reach.</li></ol>
-<p>The flagship prediction was that <i>concave</i> pieces — L-trominoes, plus-pentominoes, five-pointed stars — would show hardening's <i>largest</i> advantage. <b>It did not survive.</b> C01 found harden beating rigid on only 5 of 17 concave instances (5 losses, 7 ties; p=1), and the pre-registered meta-analysis over 37 instances found <b>no predictor that works</b>: not concavity (one-sided Fisher p=0.19), not a trend with piece count (Cochran–Armitage p=0.31), not inscribed-disk share (Mann–Whitney p=0.15). The mixed-effects model was overparameterized for the data and is reported as unstable. Hardening wins are real — 9 of 37 instances, including the replicated n=11 signatures and the L-tromino pinwheel — but <i>where</i> they happen is not predicted by any shape descriptor tested. That negative result is the finding.</p></section>
+<section><div class="wallhead"><h2>The headline result</h2></div>
+<p class="legend"><span class="dot" style="background:#e8912d"></span>hardening
+<span class="dot" style="background:#2d6fe8"></span>rigid start.
+Same budget, same piece, same container — different search.</p>
+<figure class="hero"><img src="assets/hero-compare.png" alt="Hardening vs rigid start on five L-trominoes"></figure>
+<p class="figcap">Five L-trominoes. Hardening finds the pinwheel; rigid starts never do. The rest of this page is about <i>why</i> — and when to expect it.</p>
+</section>
+
+<section><h2>Act 2 — the wrong answer</h2>
+{hyp}</section>
+
+<section><h2>Act 3 — the discovery</h2>
+<p>What predicts the outcome is not the shape. It is the <b>scaffold</b>: the arrangement
+the soft disks settle into at the end of the compress phase, before the morph begins.
+Measure how well that scaffold's relative layout matches the best-known optimum —
+the rank correlation of pairwise distances, which we call <i>scaffold fidelity</i> —
+and it predicts how close hardening gets to the optimum. In plain language:
+<b>hardening wins when the soft disks land in the right neighborhood.</b></p>
+<figure class="hero"><img src="assets/fidelity-scatter.png" alt="Scaffold fidelity vs hardening gap across 67 instances"></figure>
+<p class="figcap">Each dot is one of {fs['n']} packing instances ({fs['wins']} hardening wins).
+Higher scaffold fidelity → smaller gap to the best-known optimum. Spearman ρ={rho_d:.2f}
+on the discovery set, ρ={rho_h1:.2f} and ρ={rho_h2:.2f} on two pre-registered held-out
+replications. No shape descriptor tested comes close.</p></section>
+
+<section><h2>Act 4 — the proof</h2>
+<p>The morph is not magic; it is a <i>local</i> refiner that inherits its starting basin.
+Watch one run:</p>
+<figure class="hero"><img src="assets/morph-strip.png" alt="Disks compress into a scaffold, then morph into the pinwheel"></figure>
+<p class="figcap">Random disks → compressed scaffold → morphing shapes → the pinwheel.
+The scaffold's relative layout is already the pinwheel's; the morph just grows the corners in.</p>
+<p>{snap_line}{quarter_line}{transplant_line} The mechanism, in one sentence:
+<b>the compress phase proposes a scaffold, and the gradual morph preserves it while
+growing corners.</b> Where the scaffold lands in the right basin, hardening delivers;
+where it lands in the wrong one, the morph cannot escape.</p></section>
+
+<section><h2>Act 5 — the caveats</h2>
+<p>Two honest limits. First, <b>traps are probabilistic, not deterministic</b>: the
+scaffold picks the basin <i>region</i>, but whether the morph gets stuck inside it
+depends on the run (C15, C18). Second, <b>single-instance predictions are noisy</b>:
+the rule predicts the distribution across instances — a high-fidelity instance usually
+pays, a low-fidelity one usually doesn't — but any single flip can surprise you
+(C16). The correlation is the claim; the anecdotes are illustrations.</p></section>
+
+<section><div class="wallhead"><h2>Families</h2></div>
+<p class="legend">One-line verdict per family. Every instance and method, with animated replays, is on the family pages.</p>
+<div class="gallery">{gallery}</div></section>
 
 <section><h2>The answer so far</h2>
 {''.join(ans)}
@@ -181,17 +302,6 @@ def index_body(data, pieces):
 <div><b>{n_inst}</b><span>instances</span></div>
 <div><b>{total_runs}</b><span>runs</span></div>
 </div></section>
-
-<section><div class="wallhead"><h2>The headline result</h2></div>
-<p class="legend"><span class="dot" style="background:#e8912d"></span>hardening
-<span class="dot" style="background:#2d6fe8"></span>rigid start.
-Same budget, same piece, same container — different search.</p>
-<figure class="hero"><img src="assets/hero-compare.png" alt="Hardening vs rigid start on five L-trominoes"></figure>
-</section>
-
-<section><div class="wallhead"><h2>Families</h2></div>
-<p class="legend">One-line verdict per family. Every instance and method, with animated side-by-side replays, is on the family pages.</p>
-<div class="gallery">{gallery}</div></section>
 """
 
 
@@ -388,6 +498,8 @@ def main():
     # side-by-side replays live on the family pages)
     import subprocess
     subprocess.run([sys.executable, os.path.join(ROOT, 'scripts', 'render_thumbs.py')],
+                   check=True, capture_output=True)
+    subprocess.run([sys.executable, os.path.join(ROOT, 'scripts', 'render_narrative.py')],
                    check=True, capture_output=True)
 
     index_html = index_body(data, pieces)
