@@ -21,6 +21,15 @@ section { margin: 2.2em 0; }
 .wallbtn { font: inherit; padding: 0.4em 1.4em; border: 1px solid var(--ink); background: var(--ink); color: #fff; border-radius: 999px; cursor: pointer; }
 .wallbtn:hover { opacity: 0.85; }
 .wall { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; margin-top: 1em; }
+.gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; margin-top: 1em; }
+.famcard { display: block; background: var(--card); border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; color: inherit; text-decoration: none; }
+.famcard:hover { border-color: var(--ink); }
+.famcard img { width: 100%; aspect-ratio: 1; display: block; background: #fff; }
+.famcard div { padding: 0.6em 0.9em 0.8em; }
+.famcard b { display: block; font-size: 0.95rem; }
+.famcard span { color: var(--mut); font-size: 0.85rem; line-height: 1.4; display: block; margin-top: 0.25em; }
+.hero { margin: 1em 0 0; }
+.hero img { width: 100%; border: 1px solid var(--rule); border-radius: 10px; background: #fff; }
 .tile { background: var(--card); border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; position: relative; }
 .tile canvas { width: 100%; aspect-ratio: 1; display: block; background: #f4f1ea; }
 .tilecap { padding: 0.5em 0.8em 0.7em; font-size: 0.85rem; line-height: 1.35; }

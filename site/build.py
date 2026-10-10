@@ -14,6 +14,7 @@ import os
 import re
 import shutil
 import subprocess
+import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
@@ -129,19 +130,28 @@ def index_body(data, pieces):
         f'<span class="mono">[{html.escape(f["date"])}]</span></li>'
         for f in data['findings'])
 
-    # wall tiles: one per cell with a replay; manifest embedded as data
-    tiles = []
-    for c in cells:
-        if not c.get('replay'):
-            continue
-        fam = fams[c['family']]
-        tiles.append({
-            'file': c['replay'],
-            'caption': f"{short_piece(fam['title'])} · n = {c['n']}",
-            'sub': f"{METHOD_LABEL.get(c['method'], c['method'])} · L {fmt_L(c['best_L'])}",
-            'href': f"families.html#{c['family']}",
-        })
-    tiles_json = json.dumps(tiles)
+    # front-page gallery: one static thumbnail per family (hand-written one-line verdicts
+    # from closed campaigns; the animated side-by-side lives on the family pages)
+    VERDICTS = {
+        'ltri-in-squ': 'Hardening finds the n=5 pinwheel (L=4.0); rigid starts miss it. Basin delivery confirmed by checkpoint handoff.',
+        'cross-in-squ': 'Rigid wins here — no hardening advantage on the plus-pentomino.',
+        'star5-in-squ': 'Hardening wins n=7, 8, 9; the handoff confirms basin delivery on n=9.',
+        'squ-in-squ': 'n=11: hardening reaches Trump\u2019s record 3.87708; rigid does not.',
+        'tri-in-squ': 'n=11: the signature generalizes — hardening reaches the record here too.',
+        'pen-in-squ': 'n=11: both methods tie at Friedman\u2019s record. No advantage.',
+        'hex-in-squ': 'n=11: rigid wins outright.',
+        'pen-in-pen': 'Pentagons in a pentagon: all ties, n=5\u20138. No advantage either way.',
+    }
+    order = [f for f in ('ltri-in-squ', 'star5-in-squ', 'cross-in-squ', 'squ-in-squ',
+                         'tri-in-squ', 'pen-in-squ', 'hex-in-squ', 'pen-in-pen') if f in fams]
+    cards = []
+    for fid in order:
+        fam = fams[fid]
+        cards.append(
+            f'<a class="famcard" href="families.html#{fid}">'
+            f'<img src="assets/thumbs/{fid}.png" alt="{short_piece(fam["title"])} best packing" loading="lazy">'
+            f'<div><b>{short_piece(fam["title"])}</b><span>{VERDICTS.get(fid, "")}</span></div></a>')
+    gallery = ''.join(cards)
 
     return f"""
 <header><div class="eyebrow">a follow-up to <a href="https://yoheinakajima.github.io/soft-to-rigid/">soft-to-rigid</a></div>
@@ -169,13 +179,17 @@ def index_body(data, pieces):
 <div><b>{total_runs}</b><span>runs</span></div>
 </div></section>
 
-<section><div class="wallhead"><h2 id="walltitle">{len(tiles)} searches at once</h2>
-<button class="wallbtn" id="wallbtn">Play</button></div>
-<p class="legend"><span class="dot" style="background:#e8912d"></span>soft — still morphing
-<span class="dot" style="background:#2d6fe8"></span>hard — final shape.
-All tiles share one clock: Play restarts every search together, Pause freezes them.</p>
-<div class="wall" id="wall"></div></section>
-""", tiles_json
+<section><div class="wallhead"><h2>The headline result</h2></div>
+<p class="legend"><span class="dot" style="background:#e8912d"></span>hardening
+<span class="dot" style="background:#2d6fe8"></span>rigid start.
+Same budget, same piece, same container — different search.</p>
+<figure class="hero"><img src="assets/hero-compare.png" alt="Hardening vs rigid start on five L-trominoes"></figure>
+</section>
+
+<section><div class="wallhead"><h2>Families</h2></div>
+<p class="legend">One-line verdict per family. Every instance and method, with animated side-by-side replays, is on the family pages.</p>
+<div class="gallery">{gallery}</div></section>
+"""
 
 
 # ---------------------------------------------------------------- families
@@ -366,21 +380,18 @@ def main():
     shutil.rmtree(OUT, ignore_errors=True)
     os.makedirs(OUT)
 
-    index_html, tiles_json = index_body(data, pieces)
-    index_scripts = ("""<script src="assets/app.js"></script>\n<script>\nconst TILES = """
-                     + tiles_json + """;
-WHH.loadJSON('pieces.json').then(pieces => {
-  const W = WHH.wall(document.getElementById('wall'), TILES, pieces);
-  const b = document.getElementById('wallbtn');
-  b.textContent = 'Play';
-  b.onclick = () => { b.textContent = W.toggle() ? 'Pause' : 'Play'; };
-});
-</script>""")
+    # static front-page imagery (keeps the front page animation-free; the animated
+    # side-by-side replays live on the family pages)
+    import subprocess
+    subprocess.run([sys.executable, os.path.join(ROOT, 'scripts', 'render_thumbs.py')],
+                   check=True, capture_output=True)
+
+    index_html = index_body(data, pieces)
     pages = {
         'index': ('When does hardening help?',
                   'Can we predict where the soft-to-rigid packing search beats rigid starts? '
                   'Concave pieces are the flagship test.',
-                  index_html, index_scripts),
+                  index_html, ''),
         'families': ('Families and replays',
                      'Every instance, every method, with replays of the best runs.',
                      families_body(data, pieces), FAM_SCRIPTS),
