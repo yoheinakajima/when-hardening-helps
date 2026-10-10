@@ -23,3 +23,5 @@ the soft-to-rigid packing search helps, and *why*? Every number below is generat
 | C14-scaffold-transplant | Does the scaffold cause the morph's outcome (causal proof)? | closed | — |
 | C15-transplant-v2 | Does the scaffold cause the morph's outcome (corrected causal test)? | closed | — |
 | C16-cross-n12-replication | Does the predicted cross n=12 win replicate with fresh seeds? | closed | 0–1 (0 ties, p=1) |
+| C17-fidelity-batch2 | Does the frozen fidelity rule replicate on a second held-out batch? | closed | 6–2 (0 ties, p=0.289) |
+| C18-rng-robustness | Are the key findings robust to RNG stream? | closed | 1–2 (0 ties, p=1) |
