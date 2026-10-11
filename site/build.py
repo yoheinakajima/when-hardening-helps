@@ -16,6 +16,9 @@ import shutil
 import subprocess
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from build_home import index_body_new, index_css
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 OUT = os.path.join(ROOT, '_site')
@@ -88,11 +91,13 @@ FOOT = f"""<footer>Yohei Nakajima. Code, experiments and verification were devel
 """
 
 
-def page(name, title, desc, body, scripts=''):
+def page(name, title, desc, body, scripts='', extra_css=''):
     h = head(title, desc).replace(f'<a href="{name}.html">', f'<a href="{name}.html" aria-current="page">')
     if name == 'index':
         h = h.replace('<a class="home" href="index.html">',
                       '<a class="home" href="index.html" aria-current="page">')
+    if extra_css:
+        h = h.replace('</head>', f'<style>{extra_css}</style>\n</head>')
     return h + body + FOOT + scripts + '</body>\n</html>\n'
 
 
@@ -503,11 +508,27 @@ def main():
                    check=True, capture_output=True)
 
     index_html = index_body(data, pieces)
+
+    # Editorial homepage: visual-first narrative (build_home.py).
+    # Stats from generated sources only.
+    fstats = fidelity_stats()
+    cells = data['cells']
+    total_runs = sum(c['runs'] for c in cells)
+    home_stats = {
+        'n_instances': fstats['n'],
+        'n_wins': fstats['wins'],
+        'n_runs': total_runs,
+        'rho_discovery': fstats['discovery']['rho'],
+        'rho_heldout1': fstats['heldout1']['rho'],
+        'rho_heldout2': fstats['heldout2']['rho'],
+    }
+    index_html = index_body_new(data, pieces, home_stats)
+    home_css = index_css()
     pages = {
         'index': ('When does hardening help?',
-                  'Can we predict where the soft-to-rigid packing search beats rigid starts? '
-                  'Concave pieces are the flagship test.',
-                  index_html, ''),
+                  'Hardening wins when the soft disks land in the right neighborhood. '
+                  'A visual story of 5,200 packings.',
+                  index_html, '', home_css),
         'families': ('Families and replays',
                      'Every instance, every method, with replays of the best runs.',
                      families_body(data, pieces), FAM_SCRIPTS),
@@ -517,9 +538,12 @@ def main():
         'paper': ('Paper', 'When does hardening help? Predicting where shape continuation beats rigid starts.',
                   paper_body(data, nums), ''),
     }
-    for name, (title, desc, body, scripts) in pages.items():
+    for name, page_tuple in pages.items():
+        title, desc, body = page_tuple[0], page_tuple[1], page_tuple[2]
+        scripts = page_tuple[3] if len(page_tuple) > 3 else ''
+        extra_css = page_tuple[4] if len(page_tuple) > 4 else ''
         with open(os.path.join(OUT, name + '.html'), 'w') as f:
-            f.write(page(name, title, desc, body, scripts))
+            f.write(page(name, title, desc, body, scripts, extra_css))
 
     # assets + data
     shutil.copytree(os.path.join(HERE, 'assets'), os.path.join(OUT, 'assets'))
