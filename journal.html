@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Research journal</title>
+<meta name="description" content="Every campaign in order: question, expectation, rule, result, decision.">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<main>
+<nav class="top"><a class="home" href="index.html">when-hardening-helps</a><a href="families.html">Families</a><a href="journal.html" aria-current="page">Journal</a><a href="paper.html">Paper</a><a href="https://github.com/yoheinakajima/when-hardening-helps">Repository</a></nav>
+<div class="journal"><h1>Research journal</h1>
+<p>Every entry below is generated from the ledger. Findings link to the cells that support them.</p>
+<h2 id="C00-verify-concave">C00-verify-concave: Does the concave engine work end-to-end?</h2>
+<p>Status: closed — Pass per the pre-registered decision rule: (a) 0 run errors, (b) verifier reports 0 failures on 12 best packings, (c) convex control holds (harden 3.0000 &lt;= rigid 3.0000 on squ-in-squ n=6). Pipeline validated; proceeding to C01 concave pilot.</p>
+<ul>
+<li>harden vs rigid: 1 vs 5, 0 ties (p = 0.2188)</li>
+</ul>
+<h2 id="C01-concave-pilot">C01-concave-pilot: Concave pilot: does hardening beat rigid starts on concave pieces?</h2>
+<p>Status: closed — Per the decision rule: (i) fails on strict counts (7 wins &lt; 10 losses) and is a dead tie (5 vs 5) at noise-robust tolerance; (ii) positive control does not replicate at 16 seeds. Do NOT proceed to C02 flagship as designed. Next: targeted engine-replication check (squ-in-squ n=11, 32 seeds) plus a mechanism campaign (checkpoint-handoff on ltri n=5) to test whether the morph delivers the system into basins rigid search cannot reach - the instance-level story the pilot actually supports.</p>
+<ul>
+<li>harden vs pc: 24 vs 1, 0 ties (p = 1.55e-06)</li>
+<li>harden vs rigid: 7 vs 18, 0 ties (p = 0.04329)</li>
+<li>harden vs sa: 19 vs 6, 0 ties (p = 0.01463)</li>
+</ul>
+<h2 id="c02a-baselines-replication-engine-replication-squ-n-11-32-seeds-handoff-baselines">C02a-baselines-replication: Engine replication (squ n=11, 32 seeds) + handoff baselines</h2>
+<p>Status: closed — Replication passes per the pre-registered rule (harden 3.87708674 &lt;= 3.87709 and &lt; rigid - 1e-3). Engine validated; C02b handoff launches with checkpoints extracted from these harden replays.</p>
+<ul>
+<li>harden vs rigid: 3 vs 0, 0 ties (p = 0.25)</li>
+</ul>
+<h2 id="c02b-handoff-ltri-checkpoint-handoff-ltri-n-5">C02b-handoff-ltri: Checkpoint handoff: ltri n=5</h2>
+<p>Status: closed — Handoff succeeds per the pre-registered rule. Basin delivery confirmed on ltri n=5.</p>
+<h2 id="c02b-handoff-star5-checkpoint-handoff-star5-n-9">C02b-handoff-star5: Checkpoint handoff: star5 n=9</h2>
+<p>Status: closed — Handoff succeeds per the pre-registered rule. Basin delivery confirmed on star5 n=9.</p>
+<h2 id="C03-morph-fraction">C03-morph-fraction: Morph-fraction ablation on ltri n=5</h2>
+<p>Status: closed — Both half and quarter morphs reach the pinwheel: critical interval is tau in [0,0.25].</p>
+<h2 id="C04-convex-rare">C04-convex-rare: Convex rare-event sweep at n=11</h2>
+<p>Status: closed — Signature present for squ and tri; pen ties; hex favors rigid. Square-specific hypothesis rejected.</p>
+<ul>
+<li>harden vs rigid: 2 vs 2, 0 ties (p = 1)</li>
+</ul>
+<h2 id="C05-morph-parts">C05-morph-parts: Morph-part factorial on concave instances</h2>
+<p>Status: closed — Nocompress hypothesis rejected; compress phase essential, short morph suffices.</p>
+<ul>
+<li>harden vs harden-half: 4 vs 3, 0 ties (p = 1)</li>
+<li>harden vs harden-nocompress: 3 vs 4, 0 ties (p = 1)</li>
+<li>harden vs harden-quarter: 2 vs 5, 0 ties (p = 0.4531)</li>
+<li>harden vs rigid: 5 vs 2, 0 ties (p = 0.4531)</li>
+</ul>
+<h2 id="C06-pen-in-pen">C06-pen-in-pen: Pentagons in a pentagon</h2>
+<p>Status: closed — All ties; no hardening advantage for pentagons in pentagons.</p>
+<ul>
+<li>harden vs rigid: 0 vs 3, 1 ties (p = 0.25)</li>
+</ul>
+<h2 id="C07-concave-scale">C07-concave-scale: Concave n-scaling</h2>
+<p>Status: closed — No monotonic trend; family-dependent.</p>
+<ul>
+<li>harden vs rigid: 4 vs 4, 0 ties (p = 1)</li>
+</ul>
+<h2 id="C08-phase-decomp">C08-phase-decomp: Phase decomposition: compress vs morph</h2>
+<p>Status: closed — verdict recorded</p>
+<ul>
+<li>harden vs harden-quarter: 1 vs 5, 0 ties (p = 0.2188)</li>
+<li>harden vs rigid: 5 vs 1, 0 ties (p = 0.2188)</li>
+<li>harden vs snap: 5 vs 1, 0 ties (p = 0.2188)</li>
+</ul>
+<h2 id="C09-seed-scale">C09-seed-scale: Seed scaling: discovery curves on signature instances</h2>
+<p>Status: closed — verdict recorded</p>
+<ul>
+<li>harden vs rigid: 5 vs 1, 0 ties (p = 0.2188)</li>
+</ul>
+<h2 id="C10-container-frustration">C10-container-frustration: Container frustration: concave families in a triangle</h2>
+<p>Status: closed — verdict recorded</p>
+<ul>
+<li>harden vs rigid: 5 vs 7, 0 ties (p = 0.7744)</li>
+</ul>
+<h2 id="C11-cross-anomaly">C11-cross-anomaly: Tau0 sweep localizing the cross morph pathology</h2>
+<p>Status: closed — anomaly localized: morph breaks from near-full disks; scaffold-trap mechanism identified</p>
+<ul>
+<li>harden vs harden-quarter: 0 vs 2, 0 ties (p = 0.5)</li>
+<li>harden vs harden-tau05: 0 vs 2, 0 ties (p = 0.5)</li>
+<li>harden vs harden-tau075: 1 vs 1, 0 ties (p = 1)</li>
+</ul>
+<h2 id="C13-fidelity-validation">C13-fidelity-validation: Held-out validation of the scaffold-fidelity rule</h2>
+<p>Status: closed — rule replicates (rho=-0.795, p=0.003); predicted first cross win</p>
+<ul>
+<li>harden vs rigid: 5 vs 5, 0 ties (p = 1)</li>
+</ul>
+<h2 id="C14-scaffold-transplant">C14-scaffold-transplant: Scaffold transplant: causal test on cross n=5</h2>
+<p>Status: closed — inconclusive: tau-path mismatch; superseded by C15</p>
+<h2 id="C15-transplant-v2">C15-transplant-v2: Scaffold transplant v2: matched tau paths</h2>
+<p>Status: closed — mixed: good scaffold sufficient (8/8), trap not scaffold-determined</p>
+<h2 id="C16-cross-n12-replication">C16-cross-n12-replication: Fresh-seed replication of the cross n=12 win</h2>
+<p>Status: closed — does not replicate; prediction withdrawn</p>
+<ul>
+<li>harden vs rigid: 0 vs 1, 0 ties (p = 1)</li>
+</ul>
+<h2 id="C17-fidelity-batch2">C17-fidelity-batch2: Second held-out validation, frozen measure</h2>
+<p>Status: closed — replicates frozen (rho=-0.764, p=0.014)</p>
+<ul>
+<li>harden vs rigid: 6 vs 2, 0 ties (p = 0.2891)</li>
+</ul>
+<h2 id="C18-rng-robustness">C18-rng-robustness: RNG robustness on key cells</h2>
+<p>Status: closed — 2/3 robust; trap is probabilistic</p>
+<ul>
+<li>harden vs harden-quarter: 1 vs 2, 0 ties (p = 1)</li>
+<li>harden vs rigid: 1 vs 2, 0 ties (p = 1)</li>
+<li>harden vs snap: 2 vs 1, 0 ties (p = 1)</li>
+</ul>
+<h2 id="findings">Findings</h2>
+<ul>
+<li>C00: concave compound pieces run end-to-end. 48 runs, 0 errors; the independent verifier reports 0 overlaps and full containment on all 12 best packings; the convex control holds (harden best_L 3.0000 &lt;= rigid 3.0000 on squ-in-squ n=6). The generalized engine is bit-identical to the parent engine on convex families (5/5 differential cases), agrees with brute-force overlap on 1200/1200 concave configurations, and passes a finite-difference gradient check at 8.47e-11. (evidence: C00-verify-concave) [C00-verify-concave 2026-10-09]</li>
+<li>C01 concave pilot (1600 runs, 0 errors, 100/100 best packings verified overlap-free): the strong two-factor prediction is NOT supported. At tie tolerance 1e-4, concave harden vs rigid is 5 vs 5 with 7 ties (p=1); strict 1e-9 counts (7 vs 10) are inflated by 1e-6 legalization noise visible on squ-in-squ controls. The effect is instance-heterogeneous, not family-level: harden wins decisively on ltri n=5 (+0.61, 13%) and n=6 (+0.03), star5 n=7 (+0.011), n=8 (+0.033), n=9 (+0.10); rigid wins decisively on ltri n=7 (-0.27), n=8 (-0.10), cross n=5 (-0.33), n=8 (-0.18). Orientation variance of best rigid packings correlates only 0.27 with harden advantage - no clean geometric predictor emerges. harden crushes the classical baselines on concave: vs sa 19-6 (p=0.015), vs pc 24-1 (p=1.5e-6). Positive control (squ-in-squ) did not replicate the parent&#x27;s n=11 signature at 16 seeds - likely a power issue (parent used 32 runs for a rare tilted-basin event), to be checked by a targeted replication. (evidence: C01-concave-pilot) [C01-concave-pilot 2026-10-09]</li>
+<li>C02a replication PASSES: the generalized engine reproduces the parent&#x27;s signature - squ-in-squ n=11 harden best-of-32 = 3.87708674 (Trump&#x27;s record 3.87708359 + 3.2e-6) vs rigid best 3.88826742. Fresh baselines: ltri n=5 harden 4.00000061 vs rigid 4.61096103; star5 n=9 harden 4.57295043 vs rigid 4.67261308. 128 runs, 0 errors, 6/6 best packings verified. Proceeding to C02b handoff as pre-registered. (evidence: C02a-baselines-replication) [C02a-baselines-replication 2026-10-09]</li>
+<li>C02b-ltri handoff SUCCEEDS: rigid-from-checkpoint best-of-16 = 4.000000 (all 16 runs hit the pinwheel, median 4.000000) vs rigid-from-random best-of-16 = 4.747547 (median 5.000001). Decision rule met: checkpoint &lt;= harden best (4.00000061) + 1e-3 and random &gt; harden best + 0.01. The morph&#x27;s contribution on ltri n=5 is basin delivery: rigid search reaches the pinwheel from the tau~0.5 neighborhood but not from random starts. 32 runs, 0 errors, 17/17 best packings verified. (evidence: C02b-handoff-ltri) [C02b-handoff-ltri 2026-10-09]</li>
+<li>C03 ablation: BOTH harden-half (best 4.000000) and harden-quarter (best 4.000001) reach the ltri n=5 pinwheel; rigid best 4.610961. Per the pre-registered rule, the critical interval is tau in [0, 0.25]: even a small amount of corner rounding (tau0=0.25) suffices for the compress phase to find the pinwheel positions, and the short remaining morph grows the corners in. The disk phase is not necessary. 48 runs, 0 errors, 3/3 best packings verified. (evidence: C03-morph-fraction) [C03-morph-fraction 2026-10-09]</li>
+<li>C02b-star5 handoff SUCCEEDS: rigid-from-checkpoint best-of-16 = 4.572969 (within 1.9e-5 of C02a harden best 4.57295043; median 4.655183) vs rigid-from-random best-of-16 = 4.684325 (median 4.858657). Decision rule met on both clauses. Basin delivery confirmed on a second concave family: rigid search reaches harden&#x27;s basin from the tau~0.5 neighborhood but not from random starts. 32 unique runs (worker races produced duplicate rows, deduped by id), 0 errors, 17/17 best packings verified. (evidence: C02b-handoff-star5) [C02b-handoff-star5 2026-10-09]</li>
+<li>C04: the n=11 signature is NOT square-specific. squ-in-squ: harden 3.877087 reaches Trump&#x27;s record, rigid 3.888267 does not (signature present). tri-in-squ: harden 2.490961 vs record 2.49, rigid 2.500019 (signature present). pen-in-squ: harden 5.115946 vs rigid 5.115562, both within 4e-4 of Friedman&#x27;s 5.11555 record - a tie, no signature. hex-in-squ: rigid 6.332907 beats harden 6.339748 and sits nearer the 6.33218 record - a rigid win. The pre-registered square-specific hypothesis is rejected; the pattern now needs the meta-analysis (disk_share/symmetry as candidate moderators). 256 runs, 0 errors, 8/8 verified. (evidence: C04-convex-rare) [C04-convex-rare 2026-10-09]</li>
+<li>C06 pen-in-pen: all four instances (n=5..8) are ties between harden and rigid at 1e-4 (identical bests: 2.618034, 2.618034, 3.078690, 3.335175). No hardening advantage for pentagons in a pentagonal container at these n - consistent with the parent&#x27;s C15 (pentagons in a square: 1 vs 8) and with C04&#x27;s pen-in-squ n=11 tie. Pentagons look like a shape where the effect is absent regardless of container. 128 runs, 0 errors, 8/8 best packings verified with the fixed pentagon tightContainer branch. (evidence: C06-pen-in-pen) [C06-pen-in-pen 2026-10-09]</li>
+<li>C05 REJECTS the pre-registered nocompress hypothesis (2/7 instances, needed &gt;=5): harden-nocompress usually fails badly (ltri n=5: 4.6213 vs harden 4.0000). Correction to the C03 reading: the COMPRESS phase is essential - C03&#x27;s harden-quarter still had a compress phase (at tau=0.25). What the data now say: (a) a soft compress phase is required to arrange positions; (b) the morph may start nearly rigid (tau0=0.25 suffices on 4/7: ltri 5,6, star5 7,9); (c) the full disk-to-shape morph is overkill. Surprises: on cross n=5 the full morph HURTS (harden 6.6569 vs half/quarter/nocompress/rigid all 6.3246); on star5 n=8 only the full morph reaches 4.4173. 560 runs, 0 errors, 35/35 verified. (evidence: C05-morph-parts) [C05-morph-parts 2026-10-09]</li>
+<li>C07: no clean monotonic trend of harden advantage with n. ltri: ties at n=9,10 (6.0), harden wins big at n=11 (6.5769 vs 7.0). cross: tie at n=9, rigid wins n=10 (8.7089 vs 8.8375) and n=11 (9.1924 vs 9.3279). star5: rigid n=10 by 0.007, harden n=11 by 0.011. The pre-registered trend test goes to the meta-analysis pooled with C01/C02a. 256 runs, 0 errors, 16/16 verified. (evidence: C07-concave-scale) [C07-concave-scale 2026-10-09]</li>
+<li>META-ANALYSIS (pre-registered): no tested predictor survives. 37 instances, 9 harden-win events. H1 concavity: 7/22 concave vs 2/15 convex, one-sided Fisher p=0.187, fail to reject. H2 n-trend within concave: ltri Z=-0.76 p=0.78, star5 Z=1.15 p=0.126, pooled Z=0.49 p=0.31, fail to reject. H3 disk_share: medians both 0.408, one-sided Mann-Whitney p=0.149, fail to reject. Mixed-effects logistic (7 fixed + family random intercept on 37 obs/9 events) is overparameterized: family-level covariates compete with the random intercept (family_sd collapses to ~0 with huge uncertainty) and VB intervals are implausibly tight - reported as unstable per the plan&#x27;s contingency. Sensitivity: pooled-duplicate resolution changes 0/37 outcomes. Correction recorded: the frozen plan misremembered C01&#x27;s design (actual: ltri 5-10, cross 4-8, star5 5-10, squ 8-12, tri 8-10); inclusion corrected to the real design, intent unchanged. Headline: hardening wins are real (9/37, incl. replicated n=11 signatures and the ltri pinwheel) but NOT predicted by concavity, piece count trend, or disk share. Events cluster in ltri (3/7) and star5 (4/7); cross is 0/8 despite being concave. (evidence: meta-analysis) [META 2026-10-09]</li>
+<li>C11 tau0 sweep: the full morph breaks only from near-full disks. Cross n=5: tau0 in {0.25,0.5,0.75} all reach 6.3246, only tau0=1.0 fails (6.6569). Cross n=8: tau0=0.25 reaches 7.6026, tau0&gt;=0.5 stuck at ~7.78. Trajectory analysis: disk-compress packs to L=3.29 (disks pack far tighter than plus-shapes); the morph must then expand enormously as corners grow and gets trapped in the disk-optimal scaffold&#x27;s basin (final 6.6569). Quarter-compress ends at L=5.83 and the morph is a gentle refinement to 6.3246. Mechanism refined: the compress scaffold can be a TRAP when the disk-optimal arrangement is topologically far from any good polygonal arrangement; the morph is local and inherits the scaffold&#x27;s basin. Contrast ltri n=5 where the disk scaffold is in the right basin and compress is essential (C05). [C11-cross-anomaly 2026-10-10]</li>
+<li>C08: gradual morph is ESSENTIAL, not theater. snap (disk-compress then instant rigid) within 1e-3 of harden on only 2/6 instances (star5 n=9, tri n=11); harden beats snap by &gt;1e-3 on 4/6, catastrophically on ltri (snap 11.57/22.11 vs harden 4.00/6.58). The tight disk scaffold cannot survive an instant snap; corners must grow gradually. harden-quarter &gt;= harden-full on 6/6 (quarter best or tied everywhere) — full disk phase never better. Refined mechanism: compress proposes a (sometimes tight) scaffold; the GRADUAL morph preserves it while growing corners. [C08-phase-decomp 2026-10-10]</li>
+<li>C09: seed-scaling hypothesis NOT supported in general (gap widens on 3/6, needed 5/6). Nuanced pattern: squ n=11 signature emerges at 32 seeds (gap flips -0.01 to +0.011, rare basin confirmed); ltri n=5 is a fixed offset (harden finds 4.0 by 16 seeds, rigid never does); ltri n=11 rigid CATCHES UP by 32 seeds (gap shrinks 0.42 to 0.03) — that basin is not that rare, rigid just needs tries; star5 n=9 fixed offset. Hardening&#x27;s edge is sometimes early discovery, sometimes budget-dependent, sometimes erodible. [C09-seed-scale 2026-10-10]</li>
+<li>C10: frustration hypothesis REJECTED for cross — 0/4 harden wins in triangle container (1 tie, 3 rigid losses), matching its 0/8 in squares. Cross never benefits regardless of container; its optima are grid-obvious and its disk scaffold is always a trap (C11). ltri wins 3/4 in triangle (n=6,7,8), star5 wins 1/4 (n=8). Container frustration does not create hardening advantage; the piece-level story stands. [C10-container-frustration 2026-10-10]</li>
+<li>A12 scaffold-fidelity rule (49 instances, 13 harden wins): the disk scaffold&#x27;s relative arrangement predicts hardening&#x27;s outcome. Scaffold fidelity = Spearman rank corr of pairwise centroid distances at compress-end vs the best-known optimum. Fidelity -&gt; harden&#x27;s gap to global optimum: rho=-0.562, p&lt;0.0001. Fidelity higher on wins (0.453) than non-wins (0.083), Mann-Whitney one-sided p=0.0084; fidelity -&gt; win margin rho=0.451, p=0.0011. First quantitative predictor that works. Refinement: fidelity predicts harden&#x27;s ABSOLUTE success; the WIN additionally requires rigid to fail (high-fidelity ties exist: ltri n=9,10). A13 basin narrowness does NOT predict (rho=-0.02, p=0.91). A14 morph-commitment timing does NOT discriminate (p=0.24). [None 2026-10-09]</li>
+<li>C14 INCONCLUSIVE (design flaw, retained as pilot): the good arm used the wrong tau path (full 1-&gt;0 morph from a quarter 0.25 scaffold), so neither arm replicated its original outcome - good arm 6.6569 (target 6.32), bad arm 6.3246 (target 6.66), both medians 6.735. The inversion shows direct scaffold transplant does NOT deterministically reproduce outcomes: the morph path must match the scaffold&#x27;s tau, and the compress phase&#x27;s dynamics (not just its endpoint) may matter. Corrected design in C15 (matched tau paths). [C14-scaffold-transplant 2026-10-10]</li>
+<li>C13: scaffold-fidelity rule REPLICATES on 10 held-out instances (rho=-0.795, one-sided p=0.0030; preregistered bar was rho&lt;-0.3, p&lt;0.05). 5/10 wins. Critically, the rule predicted the FIRST-EVER cross win: cross-in-squ n=12 had the highest fidelity in the set (0.956) and harden won by 0.048 (9.6112 vs 9.6589) after cross went 0/12 across all prior campaigns. The rule is genuinely predictive, not overfit. [C13-fidelity-validation 2026-10-10]</li>
+<li>C15: causal test MIXED. Good scaffold + matched morph -&gt; good basin deterministically (8/8 reach 6.3246): the scaffold is SUFFICIENT for the good outcome, and transplant can be faithful. But trap scaffold + matched morph does NOT deterministically trap (7/8 -&gt; 6.735, 1/8 escapes to 6.3246): the trap is NOT scaffold-determined. The preregistered strong causal claim (scaffold fully causes outcome) is NOT supported. Asymmetry suggests: good basins are wide attractors (scaffold suffices); the trap depends on compress dynamics/noise history beyond endpoint positions. [C15-transplant-v2 2026-10-10]</li>
+<li>C16: cross n=12 win DOES NOT replicate with fresh seeds (101-116). Harden 9.7408 vs rigid 9.5577 (rigid wins by 0.183). The C13 result (harden 9.6112 vs 9.6589) was seed noise; rigid&#x27;s fresh-seed best (9.5577) beats harden&#x27;s original best. WITHDRAWN: the &#x27;fidelity rule predicted the first cross win&#x27; claim. The fidelity CORRELATION (A12 rho=-0.56, C13 rho=-0.80) stands as a statistical relationship, but this is a caution: high fidelity does not guarantee a win on any single instance, and best-known optima shift with seed budget. Cross returns to 0/13. [C16-cross-n12-replication 2026-10-10]</li>
+<li>C18: RNG robustness MIXED (2/3). ltri n=5: PERFECT replication - harden 4.0000, snap catastrophic 12.16, rigid 4.61 (rock-solid). cross n=12: rigid wins (9.5440 vs 9.7145), confirming C16 over C13. BUT cross n=5 trap does NOT replicate: with shifted seeds, harden-full reaches 6.3246 (escapes the 6.6569 trap) - all four methods tie at 6.3246. The trap is PROBABILISTIC, not deterministic, consistent with C15 (trap not scaffold-determined; depends on compress dynamics/noise history). Refinement: scaffold fidelity predicts the basin region, but whether the morph gets trapped within it is seed-dependent. [C18-rng-robustness 2026-10-10]</li>
+<li>C17: frozen-measure rule REPLICATES on second held-out batch (rho=-0.764, one-sided p=0.0137; bar was rho&lt;-0.3, p&lt;0.05). 6/8 wins. Cross wins twice more: n=14 squ (+0.036, fid 0.910) and n=11 tri (+0.219, fid 0.924) - both high-fidelity as predicted. Pattern: the fidelity CORRELATION is robust across 67 instances, but single-instance predictions are probabilistic (n=12 didn&#x27;t replicate, n=14 did). Rule predicts the distribution, not individual flips. [C17-fidelity-batch2 2026-10-10]</li>
+</ul></div><footer>Yohei Nakajima. Code, experiments and verification were developed with Claude (Anthropic). Every number on this site is generated from the research ledger (<a href="https://github.com/yoheinakajima/when-hardening-helps/blob/main/ledger/events.jsonl">events.jsonl</a>), built from commit <span class="mono">e3e23e5</span> on 2026-10-10. MIT licence.</footer>
+</main>
+</body>
+</html>
